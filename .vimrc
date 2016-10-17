@@ -58,6 +58,9 @@ autocmd FileType go nmap <leader>b  <Plug>(go-build)
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
 
 "raccourçis pour naviguer dans les buffers comme sur un navigateur web et ses onglets
+"fonctionne sous gvim et quelque terminaux, voir:
+"https://superuser.com/questions/787280/ctrltab-is-not-working-in-vim-with-gnome-terminal
+"
 "controle + tab pour le buffer suivant (en mode normal)
 nnoremap <C-tab> :bn<CR>
 "controle + tab pour le buffer suivant (en mode insertion)
