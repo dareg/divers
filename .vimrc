@@ -37,7 +37,6 @@ set list
 
 set clipboard=unnamedplus "activation du copier coller de Xorg
 set cursorline "mise en surbrillance de la ligne actuelle
-set wildmenu "menu pour auto-complétition dans la barre de commande
 set incsearch
 set laststatus=2 "toujours afficher la barre de status
 
@@ -46,17 +45,11 @@ if has("autocmd")
 	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-"affiche une liste des buffers en haut de la fenêtre (plugin airline)
-let g:airline#extensions#tabline#enabled = 1
-
+"configuration du menu d'auto-complétition des commandes
+set wildmenu "activation du menu d'auto-complétition dans la barre de commande
 "ignore ces fichiers lors de l'aucomplétition avec tab, ou encore lors d'une
 "recherche avec ctrl-p
 set wildignore+=*.o,*.mod,*.h5,*.fdeps
-
-"spécifique au plugin vim-go
-let g:go_fmt_command = "goimports"
-autocmd FileType go nmap <leader>b  <Plug>(go-build)
-autocmd FileType go nmap <leader>r  <Plug>(go-run)
 
 "raccourçis pour naviguer dans les buffers comme sur un navigateur web et ses onglets
 "fonctionne sous gvim et quelque terminaux, voir:
@@ -78,3 +71,16 @@ inoremap <C-W> <Esc>:bd<CR><Esc>
 "la vue du fichier reste la même lorsque l'on change puis reviens sur un buffer
 au BufLeave * let b:winview = winsaveview()
 au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+
+"==========================
+" Configuration des plugins
+"==========================
+
+"spécifique au plugin vim-go
+let g:go_fmt_command = "goimports"
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+
+"affiche une liste des buffers en haut de la fenêtre (plugin airline)
+let g:airline#extensions#tabline#enabled = 1
+
