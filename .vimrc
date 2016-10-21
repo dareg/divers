@@ -47,8 +47,13 @@ endif
 
 "configuration du menu d'auto-complétition des commandes
 set wildmenu "activation du menu d'auto-complétition dans la barre de commande
+set wildignorecase "insenible à la casse
+"un appui sur tab complète le plus possible et affiche le wildmenu,
+"un second appui auto-complète avec la première correspondance et les autres
+"appuis parcourent sur les suivantes
+set wildmode=longest:full,full
 "ignore ces fichiers lors de l'aucomplétition avec tab, ou encore lors d'une
-"recherche avec ctrl-p
+"recherche avec le plugin ctrl-p
 set wildignore+=*.o,*.mod,*.h5,*.fdeps
 
 "raccourçis pour naviguer dans les buffers comme sur un navigateur web et ses onglets
