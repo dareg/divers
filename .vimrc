@@ -16,6 +16,7 @@ set ts=2
 set autochdir "le dossier courant est celui du fichier ouvert
 set bs=indent,eol,start
 set guioptions-=T "supprime la barre d'icone dans gvim
+set guioptions-=m "supprime la barre de menu dans gvim
 set hidden "permet de changer de buffer même si le buffer courant est modifié
 
 "persistent undo
