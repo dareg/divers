@@ -28,6 +28,12 @@ set undofile
 set undolevels=1000 "maximum number of changes that can be undone
 set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 
+"place tous les fichiers swp dans un unique dossier
+if !isdirectory($HOME."/.vim/swp")
+	call mkdir($HOME."/.vim/swp", "p")
+endif
+set directory=~/.vim/swp//
+
 "surbrillance des caractères invisibles
 set listchars+=eol:¬
 set listchars+=tab:..
