@@ -8,7 +8,7 @@ colorscheme jellybeans
 let mapleader=","
 
 syntax on
-filetype plugin on
+filetype plugin indent on
 set number "affiche les numéros de lignes
 set mouse=a "active la souris en mode console
 set autoindent
