@@ -18,6 +18,7 @@ set bs=indent,eol,start
 set guioptions-=T "supprime la barre d'icone dans gvim
 set guioptions-=m "supprime la barre de menu dans gvim
 set hidden "permet de changer de buffer même si le buffer courant est modifié
+set visualbell t_vb= "désactive les beep désagréables
 
 "persistent undo
 if !isdirectory($HOME."/.vim/undodir")
@@ -36,7 +37,7 @@ set directory=~/.vim/swp//
 
 "surbrillance des caractères invisibles
 set listchars+=eol:¬
-set listchars+=tab:..
+set listchars+=tab:>―
 set listchars+=trail:~
 "set listchars+=space:·
 set list
@@ -62,23 +63,6 @@ set wildmode=longest:full,full
 "recherche avec le plugin ctrl-p
 set wildignore+=*.o,*.mod,*.h5,*.fdeps
 
-"raccourçis pour naviguer dans les buffers comme sur un navigateur web et ses onglets
-"fonctionne sous gvim et quelque terminaux, voir:
-"https://superuser.com/questions/787280/ctrltab-is-not-working-in-vim-with-gnome-terminal
-"
-"controle + tab pour le buffer suivant (en mode normal)
-nnoremap <C-tab> :bn<CR>
-"controle + tab pour le buffer suivant (en mode insertion)
-inoremap <C-tab> <Esc>:bn<CR>
-"controle + shift + tab pour le buffer précédent (en mode normal)
-nnoremap <C-S-tab> :bp<CR>
-"controle + shift + tab pour le buffer précédent (en mode insertion)
-inoremap <C-S-tab> <Esc>:bp<CR>
-"controle + w pour fermer le buffer (en mode normal)
-nnoremap <C-W> :bd<CR><Esc>
-"controle + w pour fermer le buffer (en mode insertion)
-inoremap <C-W> <Esc>:bd<CR><Esc>
-
 "la vue du fichier reste la même lorsque l'on change puis reviens sur un buffer
 au BufLeave * let b:winview = winsaveview()
 au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
@@ -87,11 +71,8 @@ au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
 " Configuration des plugins
 "==========================
 
-"spécifique au plugin vim-go
-let g:go_fmt_command = "goimports"
-autocmd FileType go nmap <leader>b  <Plug>(go-build)
-autocmd FileType go nmap <leader>r  <Plug>(go-run)
-
 "affiche une liste des buffers en haut de la fenêtre (plugin airline)
 let g:airline#extensions#tabline#enabled = 1
 
+"nerd commenter, syntax pour l'assembleur rgbds
+let g:NERDCustomDelimiters = { 'rgbds': { 'left': ';'} }
