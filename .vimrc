@@ -3,12 +3,15 @@ set nocompatible
 "gestionnaire de paquets
 execute pathogen#infect()
 
-colorscheme jellybeans
+set background=light
+colorscheme onehalflight
 
 let mapleader=","
 
 syntax on
 filetype plugin indent on
+set tabstop=2 "les tabulations ont une taille de deux espaces
+set shiftwidth=2 "utilise une taille de 2 espaces pour l'indentation automatique
 set number "affiche les numéros de lignes
 set mouse=a "active la souris en mode console
 set autoindent
@@ -19,8 +22,10 @@ set guioptions-=T "supprime la barre d'icone dans gvim
 set guioptions-=m "supprime la barre de menu dans gvim
 set hidden "permet de changer de buffer même si le buffer courant est modifié
 set visualbell t_vb= "désactive les beep désagréables
+set ignorecase
 
-"persistent undo
+"la liste des modifications est sauvegardé et est accessible même après avoir
+"quitté vim.
 if !isdirectory($HOME."/.vim/undodir")
 	call mkdir($HOME."/.vim/undodir", "p")
 endif
@@ -36,11 +41,11 @@ endif
 set directory=~/.vim/swp//
 
 "surbrillance des caractères invisibles
-set listchars+=eol:¬
-set listchars+=tab:>―
-set listchars+=trail:~
+"set listchars+=eol:¬
+"set listchars+=tab:>―
+"set listchars+=trail:~
 "set listchars+=space:·
-set list
+"set list
 
 set clipboard=unnamedplus "activation du copier coller de Xorg
 set cursorline "mise en surbrillance de la ligne actuelle
@@ -67,12 +72,34 @@ set wildignore+=*.o,*.mod,*.h5,*.fdeps
 au BufLeave * let b:winview = winsaveview()
 au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
 
+"Latex option
+autocmd FileType tex setlocal shiftwidth=2 tabstop=2
+
+"remplace la commande bd par celle de vim-bufkill
+cabbrev bd <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'BD' : 'bdelete')<CR>
+
+"échappe instantané
+set timeoutlen=1000 ttimeoutlen=0
+
+"déplace le curseur d'une ligne visuel
+nnoremap j gj
+nnoremap k gk
+
+"ras le bol de tapper W à la place de w
+command W w
+command Wq wq
+
+"rend possible de naviguer avec % à travers les if/else/do
+packadd! matchit
+
 "==========================
 " Configuration des plugins
 "==========================
 
 "affiche une liste des buffers en haut de la fenêtre (plugin airline)
 let g:airline#extensions#tabline#enabled = 1
+let g:vaxe_enable_airline_defaults = 0
+let g:airline_theme='onehalflight'
 
-"nerd commenter, syntax pour l'assembleur rgbds
-let g:NERDCustomDelimiters = { 'rgbds': { 'left': ';'} }
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'start'
