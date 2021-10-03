@@ -6,4 +6,4 @@ It doesn't depend on the [CD](https://webserver2.tecgraf.puc-rio.br/cd/) or [IM]
 
 Uses IUP 3.30 and Lua 5.4.2
 
-Only tested on Debian.
+Only tested on Debian (with mingw pour la version windows).
