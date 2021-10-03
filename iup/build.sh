@@ -1,8 +1,10 @@
 #!/bin/sh
+#Judicaël Grasset 2021
 set +x
 
-INSTALL_DIR=${INSTALL_DIR-lua_iup_lib}
-mkdir -p "$INSTALL_DIR"
+INSTALL_DIR=${INSTALL_DIR-install_dir}
+mkdir -p "$INSTALL_DIR/lib"
+mkdir -p "$INSTALL_DIR/include"
 
 IUP_TGZ=iup-3.30_Sources.tar.gz
 LUA_TGZ=lua-5.4.2_Sources.tar.gz
@@ -20,16 +22,17 @@ fi
 test -e $IUP_TGZ || exit
 
 
-tar xvf $LUA_TGZ
+tar xf $LUA_TGZ
 cd lua54/src || exit
 make -f Makefile.tecmake
 cd .. || exit
-cp lib/*/liblua54.so "../$INSTALL_DIR/"
-cp bin/*/lua54 "../$INSTALL_DIR/"
+cp lib/*/liblua54.so "$INSTALL_DIR/lib/"
+cp bin/*/lua54 "$INSTALL_DIR/lib/"
+cp -r include "$INSTALL_DIR/include/lua"
 cd .. || exit
 
 
-tar xvf $IUP_TGZ
+tar xf $IUP_TGZ
 cd iup || exit
 #Exclude all targets apart from iup itself and its Lua binding
 export EXCLUDE_TARGETS="iupcd iupcontrols iupgl iupglcontrols iup_plot iup_mglplot iup_scintilla iupim iupimglib iupweb iuptuio ledc iupview iupvled iupluaconsole iupluascripter iupole"
@@ -43,6 +46,9 @@ export USE_LUA_VERSION=54
 export USE_LUA54=YES
 make
 
-cp lib/*/libiup.so "../$INSTALL_DIR/"
-cp lib/*/Lua*/libiuplua*.so "../$INSTALL_DIR/"
+cp lib/*/libiup.so "$INSTALL_DIR/lib/"
+cp lib/*/Lua*/libiuplua*.so "$INSTALL_DIR/lib/"
+cp -r include "$INSTALL_DIR/include/iup"
+cd .. || exit
 
+rm -r iup lua54
