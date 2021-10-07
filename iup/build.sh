@@ -2,7 +2,7 @@
 #Judicaël Grasset 2021
 set +x
 
-INSTALL_DIR=${INSTALL_DIR-$PWD/install_dir_not_set}
+INSTALL_DIR=$PWD/dependencies/linux/
 mkdir -p "$INSTALL_DIR/lib"
 mkdir -p "$INSTALL_DIR/include"
 
