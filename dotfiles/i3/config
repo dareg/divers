@@ -179,10 +179,11 @@ bindsym $mod+o exec nautilus
 #bindsym $mod+o exec dolphin --platformtheme qt5ct
 
 #calculette
-bindsym $mod+c exec gnome-calculator
-bindsym XF86Calculator exec gnome-calculator
+bindsym $mod+c exec speedcrunch
+bindsym XF86Calculator exec speedcrunch
 #affiche la calulette dans une fenêtre flottante
-for_window [class="Gnome-calculator" instance="gnome-calculator"] floating enable
+#ces informations peuvent être obtenues avec la commande xprop
+for_window [class="SpeedCrunch" instance="speedcrunch"] floating enable
 
 #Ras le bol de quitter par inadvertance
 bindsym Control+q exec true
