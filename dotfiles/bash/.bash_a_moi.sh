@@ -25,3 +25,21 @@ export PS1="\[\e[1;32m\]\u@\h\[\e[m\]:\[\e[1;34m\]\w\[\e[m\] \[\e[1;36m\]\t\[\e[
 #
 #Tout les caractères n'affichant rien, par exemple les marqueur de début et de
 #fin de couleur doivent être entouré par \[ \]
+
+#Utile pour effectuer des calculs en ligne de commande
+function calc(){
+	python3 -c "print('$@ =', $@)"
+}
+
+#Génère une chaine de 32 caractères aléatoires pouvant servir de mot de passe
+function pass(){
+	cat /dev/urandom | tr -dc '[:graph:]' | fold -w 32 | head -n 1
+}
+
+#Règle le clavier en mode qwerty international
+setxkbmap -layout us -variant altgr-intl
+#La touche caps lock est désormais une touche controle suplémentaire
+setxkbmap -option ctrl:nocaps
+
+#Désactive les beep
+set b off
