@@ -92,6 +92,12 @@ command Wq wq
 "rend possible de naviguer avec % à travers les if/else/do
 packadd! matchit
 
+"netrw configuration
+let g:netrw_banner = 0 "remove the banner
+let g:netrw_liststyle = 3 "tree style listing
+let g:netrw_browse_split = 4 "when selected, open file in previously used window
+let g:netrw_winsize = 25
+
 "==========================
 " Configuration des plugins
 "==========================
