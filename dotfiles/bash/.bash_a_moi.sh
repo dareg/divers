@@ -36,6 +36,13 @@ function pass(){
 	cat /dev/urandom | tr -dc '[:graph:]' | fold -w 32 | head -n 1
 }
 
+#Vérifie que la somme de controle en argumant est la même que celle produite pour le fichier en argument
+checksha256() {
+    #$1 somme de contrôle sha256
+    #$2 fichier à vérifier
+    echo "$1 $2" | sha256sum --check
+}
+
 #Règle le clavier en mode qwerty international
 setxkbmap -layout us -variant altgr-intl
 #La touche caps lock est désormais une touche controle suplémentaire
