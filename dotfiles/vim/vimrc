@@ -20,6 +20,7 @@ set guioptions-=m "supprime la barre de menu dans gvim
 set hidden "permet de changer de buffer même si le buffer courant est modifié
 set visualbell t_vb= "désactive les beep désagréables
 set ignorecase
+let g:loaded_matchparen=1 "désactive la coloration de la parenthèse correspondante à celle sous le curseur (voir NoMatchParen)
 
 "la liste des modifications est sauvegardé et est accessible même après avoir
 "quitté vim.
