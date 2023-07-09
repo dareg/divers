@@ -1,10 +1,7 @@
 set nocompatible
 
-"gestionnaire de paquets
-execute pathogen#infect()
-
-set background=light
-colorscheme onehalflight
+set termguicolors
+colorscheme slate
 
 let mapleader=","
 
@@ -105,7 +102,6 @@ let g:netrw_winsize = 25
 "affiche une liste des buffers en haut de la fenêtre (plugin airline)
 let g:airline#extensions#tabline#enabled = 1
 let g:vaxe_enable_airline_defaults = 0
-let g:airline_theme='onehalflight'
 
 " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDDefaultAlign = 'start'
