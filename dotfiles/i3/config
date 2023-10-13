@@ -200,6 +200,9 @@ bindsym Control+q exec true
 
 #exec --no-startup-id gnome-settings-daemon
 #exec --no-startup-id gsettings set org.gnome.settings-daemon.plugins.cursor active false
+#Always show scrollbars in gtk3 apps
+exec --no-startup-id gsettings set org.gnome.desktop.interface overlay-scrolling false
+
 exec --no-startup-id xrdb ~/.Xressources
 exec --no-startup-id blueman-applet
 exec --no-startup-id xfce4-power-manager
