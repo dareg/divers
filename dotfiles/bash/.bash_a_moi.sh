@@ -1,9 +1,13 @@
 #Permet la complétition avec la touche tab des variables contenant un chemin
 shopt -s direxpand
+
 #Sans
 # ls $HOME/Doc -> tab -> ls \$HOME/Documents
 #Avec
 # ls $HOME/Doc -> tab -> ls /home/utilisateur/Documents
+
+#Permet la complétition automatique avec tab sans prendre en compte la casse
+bind -s 'set completion-ignore-case on'
 
 export PS1="\[\e[1;32m\]\u@\h\[\e[m\]:\[\e[1;34m\]\w\[\e[m\] \[\e[1;36m\]\t\[\e[m\]\n\[\e[1;30m\]$\[\e[m\] "
 #             |         | ||   |        |         |   |      |           |   |     |   |         |  |
@@ -33,7 +37,7 @@ function calc(){
 
 #Génère une chaine de 32 caractères aléatoires pouvant servir de mot de passe
 function pass(){
-	cat /dev/urandom | tr -dc '[:graph:]' | fold -w 32 | head -n 1
+	cat /dev/urandom | tr -dc '[:alnum:]' | fold -w 32 | head -n 1
 }
 
 #Vérifie que la somme de controle en argumant est la même que celle produite pour le fichier en argument
@@ -44,9 +48,14 @@ checksha256() {
 }
 
 #Règle le clavier en mode qwerty international
-setxkbmap -layout us -variant altgr-intl
+#setxkbmap -layout us -variant altgr-intl
 #La touche caps lock est désormais une touche controle suplémentaire
 setxkbmap -option ctrl:nocaps
 
 #Désactive les beep
 set b off
+
+export EDITOR=vim
+
+alias st="git status"
+

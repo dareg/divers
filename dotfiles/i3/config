@@ -186,7 +186,7 @@ bindsym --release $mod+x exec --no-startup-id import "$(date -Iseconds).png"
 bindsym Print exec --no-startup-id import -window root "$(date -Iseconds).png"
 
 #gestionnaire de fichier
-bindsym $mod+o exec thunar
+bindsym $mod+o exec nautilus
 
 #calculette
 bindsym $mod+c exec speedcrunch
