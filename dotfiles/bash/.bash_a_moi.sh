@@ -6,6 +6,14 @@ shopt -s direxpand
 #Avec
 # ls $HOME/Doc -> tab -> ls /home/utilisateur/Documents
 
+#Ajoute à l'historique plutôt que remplacer
+shopt -s histappend
+export HISTFILESIZE=10000
+
+#Essaye de corriger des petites erreurs sur les noms de dossiers
+#cd wii -> cd wiki
+shopt -s cdspell
+
 #Permet la complétition automatique avec tab sans prendre en compte la casse
 bind -s 'set completion-ignore-case on'
 
