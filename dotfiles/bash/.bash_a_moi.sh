@@ -40,7 +40,7 @@ export PS1="\[\e[1;32m\]\u@\h\[\e[m\]:\[\e[1;34m\]\w\[\e[m\] \[\e[1;36m\]\t\[\e[
 
 #Utile pour effectuer des calculs en ligne de commande
 function calc(){
-	python3 -c "import sys; print('$*' + ' = ', $*)" $@
+	{ awk "BEGIN{print $*}"; }
 }
 
 #Génère une chaine de 32 caractères aléatoires pouvant servir de mot de passe
