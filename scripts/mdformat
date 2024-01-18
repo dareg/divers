@@ -21,7 +21,7 @@ def get_all_fields(lines):
         fields = [f.strip() for f in line.split("|")[1:-1]]
         all_fields.append(fields)
         if fields and all(c in delimiters for c in fields[0]):
-            # ignore separator line for size alculation
+            # ignore separator line for size calculation
             continue
 
         all_fields_sizes.append([len(f) for f in fields])
