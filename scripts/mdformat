@@ -10,6 +10,7 @@ TABLE_ST = 1
 ULIST_ST = 2
 TEXTBLOCK_ST = 3
 CODEBLOCK_ST = 4
+HEADERBLOCK_ST = 5
 
 
 def get_all_fields(lines):
@@ -115,6 +116,11 @@ def main():
                 level = get_heading_level(line)
                 line = "\n" + "#" * level + " " + line[level:].strip()
                 newlines.append(line)
+
+            elif line.startswith("---"):
+                state = HEADERBLOCK_ST
+                newlines.append(line)
+
             elif line.startswith("-") and not line.startswith("--"):
                 ls = get_leading_spaces(lines[i])
                 line = ls + "- " + line[1:].strip()
@@ -136,6 +142,11 @@ def main():
                 newlines.append(format_text_block(lines[start:i]).strip())
                 state = NONE_ST
                 i = i - 1
+
+        elif state == HEADERBLOCK_ST:
+            if line.startswith("---"):
+                state = NONE_ST
+            newlines.append(line)
 
         i = i + 1
 
