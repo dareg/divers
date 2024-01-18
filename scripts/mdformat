@@ -115,7 +115,7 @@ def main():
                 level = get_heading_level(line)
                 line = "\n" + "#" * level + " " + line[level:].strip()
                 newlines.append(line)
-            elif line.startswith("-"):
+            elif line.startswith("-") and not line.startswith("--"):
                 ls = get_leading_spaces(lines[i])
                 line = ls + "- " + line[1:].strip()
                 newlines.append(line)
