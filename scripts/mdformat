@@ -16,9 +16,14 @@ HEADERBLOCK_ST = 5
 def get_all_fields(lines):
     all_fields = []
     all_fields_sizes = []
+    delimiters = "-:"
     for line in lines:
         fields = [f.strip() for f in line.split("|")[1:-1]]
         all_fields.append(fields)
+        if fields and all(c in delimiters for c in fields[0]):
+            # ignore separator line for size alculation
+            continue
+
         all_fields_sizes.append([len(f) for f in fields])
 
     max_sizes = [max(i) for i in zip(*all_fields_sizes)]
@@ -33,7 +38,19 @@ def format_table(lines):
         newline = ""
         for i, field in enumerate(fields):
             if field and all(c in delimiters for c in field):
-                newline = newline + "|" + "-" * maxs[i]
+                num_hyphen = maxs[i]
+                prefix = 0
+                suffix = 0
+
+                if field.startswith(":"):
+                    prefix = 1
+                    num_hyphen = num_hyphen - 1
+
+                if field.endswith(":"):
+                    suffix = 1
+                    num_hyphen = num_hyphen - 1
+
+                newline = newline + "|" + ":" * prefix + "-" * num_hyphen + ":" * suffix
                 continue
 
             newline = newline + "|" + field
