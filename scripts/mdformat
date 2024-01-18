@@ -28,9 +28,14 @@ def get_all_fields(lines):
 def format_table(lines):
     maxs, all_fields = get_all_fields(lines)
     newlines = ""
+    delimiters = "-:"
     for fields in all_fields:
         newline = ""
         for i, field in enumerate(fields):
+            if field and all(c in delimiters for c in field):
+                newline = newline + "|" + "-" * maxs[i]
+                continue
+
             newline = newline + "|" + field
             if len(field) < maxs[i]:
                 newline = newline + " " * (maxs[i] - len(field))
