@@ -53,7 +53,7 @@ def format_text_block(lines):
                 line = line[MAX_LINE_LENGTH:]
 
         newlines = newlines + line.strip() + "\n"
-    return newlines
+    return newlines[:-1]
 
 
 def get_heading_level(line):
@@ -66,6 +66,10 @@ def get_heading_level(line):
 
 
 def is_part_of_text_block(line):
+    if len(line) == 0:
+        return False
+    if line.isspace():
+        return False
     if line.startswith("#"):
         return False
     if line.startswith("-"):
@@ -105,10 +109,12 @@ def main():
     start = -1
     i = 0
     while i < len(lines):
-        line = lines[i].strip()
+        line = lines[i]
 
         if state == NONE_ST:
-            if line.startswith('|'):
+            line = line.strip()
+
+            if line.startswith("|"):
                 state = TABLE_ST
                 start = i
 
@@ -121,7 +127,7 @@ def main():
                 state = HEADERBLOCK_ST
                 newlines.append(line)
 
-            elif line.startswith("-") and not line.startswith("--"):
+            elif line.startswith("-"):
                 ls = get_leading_spaces(lines[i])
                 line = ls + "- " + line[1:].strip()
                 newlines.append(line)
@@ -131,7 +137,7 @@ def main():
                 start = i
 
         elif state == TABLE_ST:
-            if not line.startswith('|'):
+            if not line.strip().startswith("|"):
                 if i - start > 1:
                     newlines.append(format_table(lines[start:i]))
                     state = NONE_ST
@@ -144,9 +150,9 @@ def main():
                 i = i - 1
 
         elif state == HEADERBLOCK_ST:
-            if line.startswith("---"):
+            if line.strip().startswith("---"):
                 state = NONE_ST
-            newlines.append(line)
+            newlines.append(line.strip())
 
         i = i + 1
 
