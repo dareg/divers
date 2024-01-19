@@ -63,18 +63,17 @@ def format_table(lines):
 
 def format_text_block(lines):
     newlines = ""
-    for line in lines:
-        line = line.strip()
-        while len(line) > MAX_LINE_LENGTH:
-            pos = line.rfind(" ", 0, MAX_LINE_LENGTH + 1)
-            if pos != -1:
-                newlines = newlines + line[:pos].strip() + "\n"
-                line = line[pos:]
-            else:
-                newlines = newlines + line[:MAX_LINE_LENGTH].strip() + "\n"
-                line = line[MAX_LINE_LENGTH:]
+    line = " ".join(lines).replace("\n", " ").replace("  ", " ")
+    while len(line) > MAX_LINE_LENGTH:
+        pos = line.rfind(" ", 0, MAX_LINE_LENGTH + 1)
+        if pos != -1:
+            newlines = newlines + line[:pos].strip() + "\n"
+            line = line[pos:]
+        else:
+            newlines = newlines + line[:MAX_LINE_LENGTH].strip() + "\n"
+            line = line[MAX_LINE_LENGTH:]
 
-        newlines = newlines + line.strip() + "\n"
+    newlines = newlines + line.strip() + "\n"
     return newlines[:-1]
 
 
