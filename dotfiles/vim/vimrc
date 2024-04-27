@@ -13,7 +13,6 @@ set number "affiche les numéros de lignes
 set mouse=a "active la souris en mode console
 set autoindent
 set ts=2
-set autochdir "le dossier courant est celui du fichier ouvert
 set bs=indent,eol,start
 set guioptions-=T "supprime la barre d'icone dans gvim
 set guioptions-=m "supprime la barre de menu dans gvim
@@ -21,6 +20,7 @@ set hidden "permet de changer de buffer même si le buffer courant est modifié
 set visualbell t_vb= "désactive les beep désagréables
 set ignorecase
 let g:loaded_matchparen=1 "désactive la coloration de la parenthèse correspondante à celle sous le curseur (voir NoMatchParen)
+set path=** "supprime le chemin par défaut et ajoute le dossier courant et ses sous-dossiers
 
 "la liste des modifications est sauvegardé et est accessible même après avoir
 "quitté vim.
@@ -74,7 +74,7 @@ au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
 autocmd FileType tex setlocal shiftwidth=2 tabstop=2
 
 "remplace la commande bd par celle de vim-bufkill
-cabbrev bd <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'BD' : 'bdelete')<CR>
+"cabbrev bd <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'BD' : 'bdelete')<CR>
 
 "échappe instantané
 set timeoutlen=1000 ttimeoutlen=0
@@ -95,6 +95,14 @@ let g:netrw_banner = 0 "remove the banner
 let g:netrw_liststyle = 3 "tree style listing
 let g:netrw_browse_split = 4 "when selected, open file in previously used window
 let g:netrw_winsize = 25
+
+"Cherche et ouvre un fichier avec ctrl-p.
+nnoremap <C-p> :find *
+
+"Charge une config locale de vim
+if filereadable('.local_vimrc')
+	source .local_vimrc
+endif
 
 "==========================
 " Configuration des plugins
