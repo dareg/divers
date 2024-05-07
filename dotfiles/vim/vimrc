@@ -64,7 +64,7 @@ set wildignorecase "insenible à la casse
 set wildmode=longest:full,full
 "ignore ces fichiers lors de l'aucomplétition avec tab, ou encore lors d'une
 "recherche avec le plugin ctrl-p
-set wildignore+=*.o,*.mod,*.h5,*.fdeps
+set wildignore+=*.o,*.mod,*.h5,*.fdeps,*.d
 
 "la vue du fichier reste la même lorsque l'on change puis reviens sur un buffer
 au BufLeave * let b:winview = winsaveview()
