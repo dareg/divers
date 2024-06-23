@@ -3,26 +3,23 @@
 while :
 do
 
-OKAY=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | \
-	awk '/percentage/{sub(/%/,"",$2);
-	if ($2 < 10) {
-		print 1;
-	}else{
-	  print 0;
-	}
-  }'\
-)
+	PERCENTAGE=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percentage | awk '{print $2}' | sed 's/%//' | sed 's/,/./')
 
-if [ "$OKAY" -eq 1 ];then
-	dunstify \
-		-h string:x-dunst-stack-tag:low_battery \
-		"🪫 Batterie faible"\
-		-t 300000 \
-		-h string:bgcolor:#FCE289 \
-		-h string:fgcolor:#000000 \
-		-h string:frcolor:#000000
-fi
+	CAPACITY=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep capacity | awk '{print $2}' | sed 's/%//' | sed 's/,/./')
 
-sleep 10
+	BAT=$(echo "scale=4;($PERCENTAGE) * ($CAPACITY/100)" | bc )
+	BAT=$(echo "$BAT/1" | bc)
+	echo $BAT
+	if [ $BAT -lt 10 ]; then
+		dunstify \
+			-h string:x-dunst-stack-tag:low_battery \
+			"🪫 Batterie faible:$BAT%"\
+			-t 300000 \
+			-h string:bgcolor:#FCE289 \
+			-h string:fgcolor:#000000 \
+			-h string:frcolor:#000000
+	fi
+
+	sleep 30
 
 done
