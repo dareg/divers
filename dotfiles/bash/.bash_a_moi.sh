@@ -66,3 +66,6 @@ xset b off
 export EDITOR=vim
 
 alias st="git status"
+
+#Désactive C^s et C^q
+stty -ixon
