@@ -49,6 +49,11 @@ set clipboard=unnamedplus "activation du copier coller de Xorg
 set cursorline "mise en surbrillance de la ligne actuelle
 set incsearch
 set laststatus=2 "toujours afficher la barre de status
+set statusline=%f\ %=\ %l/%L "contenu de la barre de status
+"              chemin vers le fichier courant
+"                  aligne les éléments suivant à droite
+"                      numéro de ligne courant
+"                         nombre maximum de lignes
 
 "place le curseur à la position qu'il avait lors de la précédente ouverture du fichier (viminfo)
 if has("autocmd")
@@ -105,12 +110,3 @@ if filereadable('.local_vimrc')
 	source .local_vimrc
 endif
 
-"==========================
-" Configuration des plugins
-"==========================
-
-"affiche une liste des buffers en haut de la fenêtre (plugin airline)
-let g:airline#extensions#tabline#enabled = 1
-
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'start'
