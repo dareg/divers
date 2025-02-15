@@ -1,6 +1,6 @@
 set nocompatible
 
-"set termguicolors
+set termguicolors
 colorscheme slate
 
 let mapleader=","
@@ -13,7 +13,7 @@ set number "affiche les numéros de lignes
 set mouse=a "active la souris en mode console
 set autoindent
 set ts=2
-set bs=indent,eol,start
+set bs=indent,eol,start "par défaut dans vim 8 et plus
 set guioptions-=T "supprime la barre d'icone dans gvim
 set guioptions-=m "supprime la barre de menu dans gvim
 set hidden "permet de changer de buffer même si le buffer courant est modifié
@@ -47,11 +47,14 @@ set clipboard=unnamedplus "activation du copier coller de Xorg
 set cursorline "mise en surbrillance de la ligne actuelle
 set incsearch
 set laststatus=2 "toujours afficher la barre de status
-set statusline=%f\ %=\ %l/%L "contenu de la barre de status
+set statusline=%f\ %m%r%=\ col:%c\ %l/%L "contenu de la barre de status
 "              chemin vers le fichier courant
-"                  aligne les éléments suivant à droite
-"                      numéro de ligne courant
-"                         nombre maximum de lignes
+"                  affiche le status du fichier: [+] si modifié
+"                    affiche [RO] si le fichier est en lecture seule
+"                      aligne les éléments suivant à droite
+"                              affiche le numéro de colonne du caractère courant
+"                                  numéro de ligne courant
+"                                     nombre maximum de lignes
 
 "place le curseur à la position qu'il avait lors de la précédente ouverture du fichier (viminfo)
 if has("autocmd")
@@ -85,7 +88,6 @@ set timeoutlen=1000 ttimeoutlen=0
 "déplace le curseur d'une ligne visuel
 nnoremap j gj
 nnoremap k gk
-nnoremap <F5> :Lexplore<CR>
 
 "ras le bol de tapper W à la place de w
 command W w
@@ -95,6 +97,7 @@ command Wq wq
 packadd! matchit
 
 "netrw configuration
+nnoremap <F5> :Lexplore<CR>
 let g:netrw_banner = 0 "remove the banner
 let g:netrw_liststyle = 3 "tree style listing
 let g:netrw_browse_split = 4 "when selected, open file in previously used window
