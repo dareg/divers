@@ -9,6 +9,8 @@ shopt -s direxpand
 #Ajoute à l'historique plutôt que remplacer
 shopt -s histappend
 export HISTFILESIZE=10000
+#Ne garde qu'une seule occurence d'une commande dans l'historique
+export HISTCONTROL=ignoredups:erasedups
 
 #Essaye de corriger des petites erreurs sur les noms de dossiers
 #cd wii -> cd wiki
@@ -56,7 +58,7 @@ checksha256() {
 }
 
 #Règle le clavier en mode qwerty international
-#setxkbmap -layout us -variant altgr-intl
+setxkbmap -layout us -variant altgr-intl
 #La touche caps lock est désormais une touche controle suplémentaire
 setxkbmap -option ctrl:nocaps
 
@@ -66,6 +68,49 @@ xset b off
 export EDITOR=vim
 
 alias st="git status"
+fd(){
+	if [ $# -eq 1 ]; then
+		find . -iname "*$1*"
+	fi
+	if [ $# -eq 2 ]; then
+		find $2 -iname "*$1*"
+	fi
+}
 
+fdopen(){
+	local OUTFILE=$(mktemp)
+	fd $1 > "$OUTFILE"
+	if [ $(cat $OUTFILE | wc -l) -eq 1 ]; then
+		open "$(cat $OUTFILE)"
+	else
+		cat "$OUTFILE"
+	fi
+	rm "$OUTFILE"
+}
+#
 #Désactive C^s et C^q
 stty -ixon
+
+f() {
+    fff "$@"
+    cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
+}
+
+export VR_MAX_DEPTH=20
+v() {
+	IFS="
+"
+	local D="$(~/logiciels/bin/v.py $*)";
+	if [ $? -eq 0 ];then
+		cd "$D";
+	fi
+}
+
+vr() {
+	IFS="
+"
+	local D="$(~/logiciels/bin/v.py -r $*)";
+	if [ $? -eq 0 ];then
+		cd "$D";
+	fi
+}
