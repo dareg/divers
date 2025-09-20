@@ -1,0 +1,131 @@
+#!/bin/bash 
+
+# vorbiscomment is in vorbis-tools
+
+DBORI=$(mktemp)
+DB=$(mktemp)
+RES=$(mktemp)
+#trap "rm $DBORI $DB $RES" EXIT
+#
+MUSIC_FOLDER=~/Médias/audio/Musique
+
+function prepare_db(){
+  find ~/Médias/audio/Musique | sort -h > $DBORI
+  find ~/Médias/audio/Musique -printf "%P\n" | sort -h | iconv -f utf8 -t ascii//TRANSLIT > $DB
+}
+
+function is_number() {
+	if [[ $1 =~ ^[0-9]+ ]] ; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+function get_line() {
+	local FILE=$1
+	local N=$2
+	head -n $2 $FILE | tail -n 1
+}
+
+function search_prompt () {
+	echo -n "Chercher: "
+  read search
+}
+
+function search_prompt2 () {
+	echo -n "Lancer (ou nouvelle recherche): "
+  read search
+}
+
+function get_artist() {
+	case "$1" in
+		*.flac)
+			metaflac --show-tag=ARTIST "$1" | cut -d = -f 2
+			;;
+		*.ogg)
+			vorbiscomment "$1" | grep ARTIST | cut -d = -f 2
+			;;
+		*.opus)
+			kid3-cli -c "get TITLE" "$1" 
+			;;
+	esac
+}
+
+function get_album() {
+	case "$1" in
+		*.flac)
+			metaflac --show-tag=ALBUM "$1" | cut -d = -f 2
+			;;
+		*.ogg)
+			vorbiscomment "$1" | grep ALBUM | cut -d = -f 2
+			;;
+		*.opus)
+			kid3-cli -c "get ALBUM" "$1" 
+			;;
+	esac
+}
+
+function get_title() {
+	case "$1" in
+		*.flac)
+			metaflac --show-tag=TITLE "$1" | cut -d = -f 2
+			;;
+		*.ogg)
+			vorbiscomment "$1" | grep TITLE | cut -d = -f 2
+			;;
+		*.opus)
+			kid3-cli -c "get TITLE" "$1" 
+			;;
+	esac
+}
+
+
+function search () {
+	grep -i -n $search $DB | cut -f 1 -d : > $RES
+	temp=$(mktemp)
+	templine=$(mktemp)
+	while read track; do
+		local path=$(get_line $DBORI $track)
+		if [ -d "$path" ];then
+			echo "🗀 $path" >> $temp
+			continue
+		fi
+		local ARTIST=$(get_artist "$path")
+		local ALBUM=$(get_album "$path")
+		local TITLE=$(get_title "$path")
+		if [ -n "$ARTIST" ] && [ -n "$ALBUM" ] && [ -n "$TITLE" ];then
+			echo "♫ $ARTIST: $ALBUM - $TITLE" >> $temp
+		else
+			echo $path >> $temp
+		fi
+	done < $RES
+	cat -n $temp
+}
+
+function play_track(){
+  TRACK_NUM_IN_DBORI=$(get_line $RES $1)
+  MUSIC=$(get_line $DBORI $TRACK_NUM_IN_DBORI)
+  exec mpv --ao=pulse --no-video "$MUSIC"
+}
+
+
+prepare_db
+search_prompt
+while true; do
+	search
+	if [ ! -s $RES ]; then
+		search_prompt
+		continue
+	fi
+	search_prompt2
+	if is_number $search; then
+		play_track $search
+	else
+		continue
+	fi
+done
+
+
+
+
